@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Request } from '@nestjs/common';
 import { MembersService } from './members.service';
 import { JoinMemberDto } from './dto/join-member.dto';
-import { UpdateMemberDto } from './dto/update-member.dto';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('members')
 export class MembersController {
@@ -12,23 +13,14 @@ export class MembersController {
     return this.membersService.create(member);
   }
 
-  @Get()
-  findAll() {
-    return this.membersService.findAll();
+  @UseGuards(AuthGuard('local'))
+  @Post()
+  async login(@Request() req) {
+    return req.member;
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.membersService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.membersService.update(+id, updateMemberDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.membersService.remove(+id);
+  @Post('login/:email')
+  findOne(@Param('email') email: string) {
+    return this.membersService.findOne(email);
   }
 }
