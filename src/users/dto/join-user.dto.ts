@@ -1,1 +1,5 @@
-export class JoinUserDto {}
+export class JoinUserDto {
+  email: string;
+
+  password: string;
+}

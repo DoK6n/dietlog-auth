@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   // eslint-disable-next-line @typescript-eslint/ban-types
   async validate(payload: JwtPayload, done: Function) {
-    const user = await this.authService.validateMember(payload);
+    const user = await this.authService.validateuser(payload);
     if (!user) {
       return done(new UnauthorizedException(), false);
     }
