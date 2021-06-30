@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { JoinMemberDto } from './dto/join-member.dto';
+import { JoinUserDto } from './dto/join-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class MembersService {
+export class UsersService {
   // private readonly users = [{email: 'test@email.com'}]
-  create(member: JoinMemberDto) {
-    const { id, password } = Object.assign(member);
+  create(user: JoinUserDto) {
+    const { id, password } = Object.assign(user);
 
     const hashed = bcrypt.hashSync(password, 10);
     return { id, hashed };
